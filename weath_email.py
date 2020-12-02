@@ -14,15 +14,13 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-url = 'https://free-api.heweather.net/s6/weather/forecast?location=深圳&key=684670d3c7604b41afebcf3111c216ec'
-# 获取当日时间  2019-11-10
-# today_time = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+url = 'https://free-api.heweather.net/s6/weather/forecast?location=深圳&key=Yourkey'
 today = datetime.date.today()
-tomorrow = today + datetime.timedelta(days=1)
-sender = 'vontenccie@163.com'
-passw = 'HAGUTMMTGFSJDSSA'
-mail_host = 'smtp.163.com'
-receivers = ['717708723@qq.com','664769979@qq.com']
+tomorrow = today + datetime.timedelta(days=1)   # 获取明日时间  2019-11-10
+sender = 'Senderemail@email.com'
+passw = 'YourPassword'
+mail_host = 'YourSMTPServer'
+receivers = ['Youremail@email.com']
 
 def get_weather_data():
     res = requests.get(url).json()
@@ -95,11 +93,10 @@ def auto_email():
         receive = receivers
         # receive.extend(cc_list)
         s.sendmail(sender,receive,msg.as_string())
-        # print('Success!')
         s.quit()
         print('邮件发送完成！')
     except smtplib.SMTPException as e:
         print('发送失败，原因如下：%s' % e)
 
 if __name__ == '__main__':
-    info = auto_email()
+    auto_email()
